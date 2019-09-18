@@ -38,7 +38,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        List<Permission> permissionList = permissionService.queryByUserName(user.getUserName());
+        List<Permission> permissionList = permissionService.queryByUserName(user.getUsername());
         //权限信息对象info，用来存放查出的用户的所有的角色（role）及权限（permissoin）
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         for (Permission permission : permissionList) {
@@ -61,7 +61,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 //            user = userService.selectByUsername(username);
 //        }
         User query = new User();
-        query.setUserName(username);
+        query.setUsername(username);
         User user = userService.queryByUser(query);
 
         if (user == null) throw new UnknownAccountException();

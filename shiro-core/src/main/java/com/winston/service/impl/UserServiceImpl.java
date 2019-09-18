@@ -41,8 +41,8 @@ public class UserServiceImpl implements IUserService {
         if(user.getId() != null){
             criteria.andIdEqualTo(user.getId());
         }
-        if(user.getUserName() != null){
-            criteria.andUserNameEqualTo(user.getUserName());
+        if(user.getUsername() != null){
+            criteria.andUsernameEqualTo(user.getUsername());
         }
         List<User> users = mapper.selectByExample(example);
         if(users != null && users.size() > 0){

@@ -42,7 +42,7 @@ public class PermissionServiceImpl implements IPermissionService {
     @Override
     public List<Permission> queryByUserName(String username) {
         User query = new User();
-        query.setUserName(username);
+        query.setUsername(username);
         User user = userService.queryByUser(query);
         if(user != null){
             List<UserRole> userRoleKeys = userRoleService.queryByUserId(user.getId());

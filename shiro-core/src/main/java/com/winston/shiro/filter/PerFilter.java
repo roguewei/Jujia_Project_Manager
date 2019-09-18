@@ -71,7 +71,7 @@ public class PerFilter extends AuthorizationFilter {
         if(user == null){
             codeMsg = CodeMsg.IS_NOT_LOGIN;
         }else{
-            List<Permission> permissionList = permissionService.queryByUserName(user.getUserName());
+            List<Permission> permissionList = permissionService.queryByUserName(user.getUsername());
             for(Permission permission : permissionList){
                 if(subject.isPermitted(permission.getPerUrl())){
                     // 此处不管有没有权限都返回true，所以需要配置异常拦截器CustomExceptionHandler

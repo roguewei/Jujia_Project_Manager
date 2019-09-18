@@ -19,7 +19,7 @@ public class PasswordHelper {
 	 */
 	public void encryptPassword(User user) {
 		//String salt=randomNumberGenerator.nextBytes().toHex();
-		String newPassword = new SimpleHash(algorithmName, user.getPassword(),  ByteSource.Util.bytes(user.getUserName()), hashIterations).toHex();
+		String newPassword = new SimpleHash(algorithmName, user.getPassword(),  ByteSource.Util.bytes(user.getUsername()), hashIterations).toHex();
 		//String newPassword = new SimpleHash(algorithmName, user.getPassword()).toHex();
 		user.setPassword(newPassword);
 	}
@@ -44,7 +44,7 @@ public class PasswordHelper {
 		PasswordHelper passwordHelper = new PasswordHelper();
 		User user = new User();
 		long nowTime = new Date().getTime();
-		user.setUserName("admin");
+		user.setUsername("admin");
 		user.setPassword("123456");
 //		user.setOpenId("oWYB6ww7hzeJ-IsBT106ob7WgaDE");
 		user.setCreateTime(nowTime);
