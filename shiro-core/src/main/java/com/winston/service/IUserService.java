@@ -16,7 +16,7 @@ public interface IUserService {
 
     User selectByOpenId(String openId);
 
-    int save(WeChatUser weChatUser);
+    void save(WeChatUser weChatUser);
 
     int save(User user);
 

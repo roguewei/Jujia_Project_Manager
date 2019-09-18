@@ -1,7 +1,7 @@
 package com.winston.service.impl;
 
 import com.winston.entity.UserRoleExample;
-import com.winston.entity.UserRoleKey;
+import com.winston.entity.UserRole;
 import com.winston.mapper.UserRoleMapper;
 import com.winston.service.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,10 @@ public class UserRoleServiceImpl implements IUserRoleService {
     private UserRoleMapper mapper;
 
     @Override
-    public List<UserRoleKey> queryByUserId(int userId) {
+    public List<UserRole> queryByUserId(int userId) {
         UserRoleExample example = new UserRoleExample();
         example.createCriteria().andUserIdEqualTo(userId);
-        List<UserRoleKey> userRoleKeys = mapper.selectByExample(example);
+        List<UserRole> userRoleKeys = mapper.selectByExample(example);
         return userRoleKeys;
     }
 }

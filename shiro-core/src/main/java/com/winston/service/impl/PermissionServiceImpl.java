@@ -42,19 +42,19 @@ public class PermissionServiceImpl implements IPermissionService {
     @Override
     public List<Permission> queryByUserName(String username) {
         User query = new User();
-        query.setUsername(username);
+        query.setUserName(username);
         User user = userService.queryByUser(query);
         if(user != null){
-            List<UserRoleKey> userRoleKeys = userRoleService.queryByUserId(user.getId());
+            List<UserRole> userRoleKeys = userRoleService.queryByUserId(user.getId());
             if(userRoleKeys != null && userRoleKeys.size() > 0){
                 List<Integer> roleIds = new ArrayList<>();
-                for(UserRoleKey userRole : userRoleKeys){
+                for(UserRole userRole : userRoleKeys){
                     roleIds.add(Integer.valueOf(userRole.getRoleId()));
                 }
-                List<RolePermissionKey> rolePermissionKeys = rolePermissionService.queryByRoleIds(roleIds);
+                List<RolePermission> rolePermissionKeys = rolePermissionService.queryByRoleIds(roleIds);
                 if(rolePermissionKeys != null && rolePermissionKeys.size() > 0){
                     List<Integer> perIds = new ArrayList<>();
-                    for(RolePermissionKey rolePer : rolePermissionKeys){
+                    for(RolePermission rolePer : rolePermissionKeys){
                         perIds.add(Integer.valueOf(rolePer.getPerId()));
                     }
                     PermissionExample example = new PermissionExample();

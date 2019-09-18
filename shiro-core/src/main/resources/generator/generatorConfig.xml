@@ -15,7 +15,7 @@
             <property name="suppressAllComments" value="false"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/fswx?serverTimezone=GMT%2B8" userId="root" password="123456">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/project_manager?serverTimezone=GMT%2B8" userId="root" password="123456">
             <!-- 添加下面一个属性才可以识别主键问题 -->
             <property name="useInformationSchema" value="true"></property>
 
@@ -39,20 +39,40 @@
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
         <!--  如若修改字段，修改字段要把原有的 **mapper.xml删除再生产 -->
 
+        <table tableName="log_info" domainObjectName="LogInfo" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
+        <table tableName="cli_staff_project" domainObjectName="CliStaffProject" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
+        <table tableName="dictionary" domainObjectName="Dictionary" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
         <table tableName="permission" domainObjectName="Permission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
+        <table tableName="project" domainObjectName="Project" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
+
+        <table tableName="project_log" domainObjectName="ProjectLog" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
             <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
         </table>
         <table tableName="role" domainObjectName="Role" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
             <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
         </table>
-        <table tableName="user" domainObjectName="User" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+        <table tableName="role_permission" domainObjectName="RolePermission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
             <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
         </table>
-        <table tableName="role_permission" domainObjectName="RolePermission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+        <table tableName="staff_client" domainObjectName="StaffClient" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
+        <table tableName="user" domainObjectName="User" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
             <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
         </table>
         <table tableName="user_role" domainObjectName="UserRole" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
             <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
         </table>
+
         </context>
     </generatorConfiguration>

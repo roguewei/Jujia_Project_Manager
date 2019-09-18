@@ -76,10 +76,10 @@ public class TokenService {
     public String getToken(User user) {
         HttpServletRequest request = HttpUtil.getRequest();
         String sessionId = request.getSession().getId();
-        Claims claims = Jwts.claims().setSubject(user.getUsername());
+        Claims claims = Jwts.claims().setSubject(user.getUserName());
 
         claims.put(Commons.USER_ID, user.getId());
-        claims.put("username", user.getUsername());
+        claims.put("username", user.getUserName());
 
         String jwtToken = jwtTokenFactory.createJwtToken(claims).getToken(); // 构建token
         redisService.set(TokenKey.getLoginToken, sessionId, jwtToken);

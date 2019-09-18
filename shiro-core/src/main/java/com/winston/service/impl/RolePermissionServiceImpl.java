@@ -1,7 +1,7 @@
 package com.winston.service.impl;
 
 import com.winston.entity.RolePermissionExample;
-import com.winston.entity.RolePermissionKey;
+import com.winston.entity.RolePermission;
 import com.winston.mapper.RolePermissionMapper;
 import com.winston.service.IRolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,10 @@ public class RolePermissionServiceImpl implements IRolePermissionService {
     private RolePermissionMapper mapper;
 
     @Override
-    public List<RolePermissionKey> queryByRoleIds(List<Integer> roleIds) {
+    public List<RolePermission> queryByRoleIds(List<Integer> roleIds) {
         RolePermissionExample example = new RolePermissionExample();
         example.createCriteria().andRoleIdIn(roleIds);
-        List<RolePermissionKey> rolePermissionKeys = mapper.selectByExample(example);
+        List<RolePermission> rolePermissionKeys = mapper.selectByExample(example);
         return rolePermissionKeys;
     }
 }

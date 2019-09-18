@@ -1,11 +1,11 @@
 package com.winston.service;
 
-import com.winston.entity.RolePermissionKey;
+import com.winston.entity.RolePermission;
 
 import java.util.List;
 
 public interface IRolePermissionService {
 
-    List<RolePermissionKey> queryByRoleIds(List<Integer> roleIds);
+    List<RolePermission> queryByRoleIds(List<Integer> roleIds);
 
 }

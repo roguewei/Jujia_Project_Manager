@@ -19,7 +19,7 @@ public class PasswordHelper {
 	 */
 	public void encryptPassword(User user) {
 		//String salt=randomNumberGenerator.nextBytes().toHex();
-		String newPassword = new SimpleHash(algorithmName, user.getPassword(),  ByteSource.Util.bytes(user.getUsername()), hashIterations).toHex();
+		String newPassword = new SimpleHash(algorithmName, user.getPassword(),  ByteSource.Util.bytes(user.getUserName()), hashIterations).toHex();
 		//String newPassword = new SimpleHash(algorithmName, user.getPassword()).toHex();
 		user.setPassword(newPassword);
 	}
@@ -29,10 +29,10 @@ public class PasswordHelper {
 	 * @param user
 	 */
 	public void encryptPasswordWx(User user) {
-		//String salt=randomNumberGenerator.nextBytes().toHex();
-		String newOpenId = new SimpleHash(algorithmName, user.getOpenidHex(),  ByteSource.Util.bytes(user.getOpenId()), hashIterations).toHex();
-		//String newPassword = new SimpleHash(algorithmName, user.getPassword()).toHex();
-		user.setOpenidHex(newOpenId);
+//		//String salt=randomNumberGenerator.nextBytes().toHex();
+//		String newOpenId = new SimpleHash(algorithmName, user.getOpenidHex(),  ByteSource.Util.bytes(user.getOpenId()), hashIterations).toHex();
+//		//String newPassword = new SimpleHash(algorithmName, user.getPassword()).toHex();
+//		user.setOpenidHex(newOpenId);
 
 	}
 
@@ -44,15 +44,14 @@ public class PasswordHelper {
 		PasswordHelper passwordHelper = new PasswordHelper();
 		User user = new User();
 		long nowTime = new Date().getTime();
-		user.setUsername("admin");
+		user.setUserName("admin");
 		user.setPassword("123456");
-		user.setOpenId("oWYB6ww7hzeJ-IsBT106ob7WgaDE");
+//		user.setOpenId("oWYB6ww7hzeJ-IsBT106ob7WgaDE");
 		user.setCreateTime(nowTime);
 		user.setUpdateTime(nowTime);
 		user.setCreateOpr("admin");
 		user.setUpdateOpr("admin");
-		user.setEnable(1);
-		user.setState("1");
+		user.setStatus(1);
 		passwordHelper.encryptPassword(user);
 
 		System.out.println(user.getPassword());

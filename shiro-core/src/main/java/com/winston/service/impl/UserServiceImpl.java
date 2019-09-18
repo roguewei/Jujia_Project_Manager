@@ -41,11 +41,8 @@ public class UserServiceImpl implements IUserService {
         if(user.getId() != null){
             criteria.andIdEqualTo(user.getId());
         }
-        if(user.getUsername() != null){
-            criteria.andUsernameEqualTo(user.getUsername());
-        }
-        if(user.getOpenId() != null){
-            criteria.andOpenIdEqualTo(user.getOpenId());
+        if(user.getUserName() != null){
+            criteria.andUserNameEqualTo(user.getUserName());
         }
         List<User> users = mapper.selectByExample(example);
         if(users != null && users.size() > 0){
@@ -67,25 +64,25 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public int save(WeChatUser weChatUser) {
-        String nicname = weChatUser.getNickname();
-        long nowTime = new Date().getTime();
-
-        User user = new User();
-        user.setOpenId(weChatUser.getOpenId());
-        user.setOpenidHex(weChatUser.getOpenId());
-        user.setEnable(1);
-        user.setSex(String.valueOf(weChatUser.getSex()));
-        user.setNickName(weChatUser.getNickname());
-        user.setState("1");
-        user.setCreateOpr(nicname);
-        user.setCreateTime(nowTime);
-        user.setUpdateOpr(nicname);
-        user.setUpdateTime(nowTime);
-        user.setOperatorType("1");
-        PasswordHelper passwordHelper = new PasswordHelper();
-        passwordHelper.encryptPasswordWx(user);
-        return save(user);
+    public void save(WeChatUser weChatUser) {
+//        String nicname = weChatUser.getNickname();
+//        long nowTime = new Date().getTime();
+//
+//        User user = new User();
+//        user.setOpenId(weChatUser.getOpenId());
+//        user.setOpenidHex(weChatUser.getOpenId());
+//        user.setEnable(1);
+//        user.setSex(String.valueOf(weChatUser.getSex()));
+//        user.setNickName(weChatUser.getNickname());
+//        user.setState("1");
+//        user.setCreateOpr(nicname);
+//        user.setCreateTime(nowTime);
+//        user.setUpdateOpr(nicname);
+//        user.setUpdateTime(nowTime);
+//        user.setOperatorType("1");
+//        PasswordHelper passwordHelper = new PasswordHelper();
+//        passwordHelper.encryptPasswordWx(user);
+//        save(user);
     }
 
     @Override
@@ -93,13 +90,12 @@ public class UserServiceImpl implements IUserService {
         String nicname = rawAccessJwtToken.getUserName();
         long nowTime = new Date().getTime();
 
-        user.setEnable(1);
-        user.setState("1");
+        user.setStatus(1);
         user.setCreateOpr(nicname);
         user.setCreateTime(nowTime);
         user.setUpdateOpr(nicname);
         user.setUpdateTime(nowTime);
-        user.setOperatorType("0");
+//        user.setOperatorType("0");
         PasswordHelper passwordHelper = new PasswordHelper();
         passwordHelper.encryptPassword(user);
         mapper.insert(user);

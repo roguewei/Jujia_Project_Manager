@@ -43,11 +43,11 @@ public class ProjectUrlUtils {
                     urlList.add(url);
                     String newUrl = url.replace("/","");
                     Permission permission = new Permission();
-                    permission.setPerurl(url);
+                    permission.setPerUrl(url);
                     if(url.length()-newUrl.length()<=2){
-                        permission.setType("0");
+                        permission.setType(0);
                     }else{
-                        permission.setType("1");
+                        permission.setType(1);
                     }
                     permissionService.addAllUrl(permission);
                 }

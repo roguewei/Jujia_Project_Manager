@@ -181,8 +181,8 @@ public class MyAuthenticationFilter extends AuthenticatingFilter {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         //登陆成功更新登陆时间
-        User principal = (User) subject.getPrincipal();
-        principal.setLastLogon(new Date().getTime());
+//        User principal = (User) subject.getPrincipal();
+//        principal.setLastLogon(new Date().getTime());
 //        userService.updateNotNull(principal);
         return true;
     }
