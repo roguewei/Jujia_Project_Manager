@@ -1,11 +1,13 @@
 package com.winston.service.impl;
 
 import com.winston.entity.*;
+import com.winston.exception.ErrorException;
 import com.winston.mapper.PermissionMapper;
 import com.winston.service.IPermissionService;
 import com.winston.service.IRolePermissionService;
 import com.winston.service.IUserRoleService;
 import com.winston.service.IUserService;
+import com.winston.utils.result.CodeMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,9 +43,7 @@ public class PermissionServiceImpl implements IPermissionService {
 
     @Override
     public List<Permission> queryByUserName(String username) {
-        User query = new User();
-        query.setUsername(username);
-        User user = userService.queryByUser(query);
+        User user = userService.selectByUsername(username);
         if(user != null){
             List<UserRole> userRoleKeys = userRoleService.queryByUserId(user.getId());
             if(userRoleKeys != null && userRoleKeys.size() > 0){
@@ -70,5 +70,34 @@ public class PermissionServiceImpl implements IPermissionService {
     @Override
     public void addAllUrl(Permission permission) {
         mapper.insert(permission);
+    }
+
+    @Override
+    public void addPermission(Permission permission) {
+        if(permission.getPerName() != null && permission.getPerUrl() != null){
+            PermissionExample example = new PermissionExample();
+            example.createCriteria().andPerNameEqualTo(permission.getPerName()).andPerUrlEqualTo(permission.getPerUrl());
+            List<Permission> permissions = mapper.selectByExample(example);
+            if(permissions != null && permissions.size() > 0){
+                throw new ErrorException(CodeMsg.PERMISSION_ALERADY_EXIST);
+            }
+            mapper.insert(permission);
+        }else{
+            throw new ErrorException(CodeMsg.PERMISSION_PARAM_NULL);
+        }
+    }
+
+    @Override
+    public void updatePermission(Permission permission) {
+        mapper.updateByPrimaryKeySelective(permission);
+    }
+
+    @Override
+    public void delPermission(Integer id) {
+        List<RolePermission> rolePermissions = rolePermissionService.queryByPerIds(id);
+        if(rolePermissions != null && rolePermissions.size() > 0){
+            throw new ErrorException(CodeMsg.PERMISSION_HAS_ROLE_USE);
+        }
+        mapper.deleteByPrimaryKey(id);
     }
 }

@@ -20,7 +20,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())//生产环境 要关闭
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.shiro.controller"))//扫描接口的包路径，
+                .apis(RequestHandlerSelectors.basePackage("com.winston.controller"))//扫描接口的包路径，
                 .paths(PathSelectors.any())
                 .build();
     }

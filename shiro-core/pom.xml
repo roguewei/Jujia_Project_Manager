@@ -148,21 +148,21 @@
         </dependency>
 
         <!-- 视频处理 -->
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>javacv</artifactId>
-            <version>1.4.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bytedeco.javacpp-presets</groupId>
-            <artifactId>ffmpeg-platform</artifactId>
-            <version>4.0.2-1.4.3</version>
-        </dependency>
-        <dependency>
-            <groupId>it.sauronsoftware</groupId>
-            <artifactId>jave</artifactId>
-            <version>1.0.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.bytedeco</groupId>-->
+            <!--<artifactId>javacv</artifactId>-->
+            <!--<version>1.4.3</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.bytedeco.javacpp-presets</groupId>-->
+            <!--<artifactId>ffmpeg-platform</artifactId>-->
+            <!--<version>4.0.2-1.4.3</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>it.sauronsoftware</groupId>-->
+            <!--<artifactId>jave</artifactId>-->
+            <!--<version>1.0.2</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

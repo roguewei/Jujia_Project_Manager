@@ -60,9 +60,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 //        }else{
 //            user = userService.selectByUsername(username);
 //        }
-        User query = new User();
-        query.setUsername(username);
-        User user = userService.queryByUser(query);
+        User user = userService.selectByUsername(username);
 
         if (user == null) throw new UnknownAccountException();
 

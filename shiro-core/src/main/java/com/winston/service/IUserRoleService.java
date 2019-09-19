@@ -6,6 +6,12 @@ import java.util.List;
 
 public interface IUserRoleService {
 
-    List<UserRole> queryByUserId(int userId);
+    List<UserRole> queryByUserId(Integer userId);
+
+    List<UserRole> queryByRoleId(Integer roleId);
+
+    List<Integer> getRoleIdsByUserName(String username);
+
+    void addUserRole(UserRole userRole);
 
 }

@@ -1,17 +1,18 @@
 package com.winston.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.winston.entity.User;
 import com.winston.entity.UserExample;
 import com.winston.mapper.UserMapper;
 import com.winston.service.IUserService;
 import com.winston.utils.jwt.RawAccessJwtToken;
+import com.winston.utils.result.Result;
 import com.winston.utils.shiro.PasswordHelper;
 import com.winston.utils.wechat.WeChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Winston
@@ -30,12 +31,9 @@ public class UserServiceImpl implements IUserService {
     private RawAccessJwtToken rawAccessJwtToken;
 
     @Override
-    public List<User> queryAll() {
-        return mapper.selectByExample(new UserExample());
-    }
+    public Result queryByUser(User user, int page, int length) {
+        PageHelper.startPage(page, length);
 
-    @Override
-    public User queryByUser(User user) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         if(user.getId() != null){
@@ -45,6 +43,21 @@ public class UserServiceImpl implements IUserService {
             criteria.andUsernameEqualTo(user.getUsername());
         }
         List<User> users = mapper.selectByExample(example);
+        List<Map<String, Object>> result = new ArrayList<>();
+        if(users != null && users.size() > 0){
+            for(User us : users){
+                Map<String, Object> userMap = result(us);
+                result.add(userMap);
+            }
+        }
+        return Result.success(result);
+    }
+
+    @Override
+    public User selectByUsername(String username) {
+        UserExample example = new UserExample();
+        example.createCriteria().andUsernameEqualTo(username);
+        List<User> users = mapper.selectByExample(example);
         if(users != null && users.size() > 0){
             return users.get(0);
         }
@@ -52,8 +65,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User selectByUsername(String username) {
-        return null;
+    public User selectById(Integer id) {
+        User user = mapper.selectByPrimaryKey(id);
+        return user;
     }
 
     @Override
@@ -109,4 +123,16 @@ public class UserServiceImpl implements IUserService {
 //        List<User> users = mapper.selectByExample(example);
 //        return users.get(0);
 //    }
+
+    private Map<String, Object> result(User user){
+        Map<String, Object> result = new HashMap<>();
+        result.put("username", user.getUsername());
+        result.put("relName", user.getRelName());
+        result.put("jobNumber", user.getJobNumber());
+        result.put("sex", user.getSex());
+        result.put("mobile", user.getMobile());
+        result.put("email", user.getEmail());
+        result.put("address", user.getAddress());
+        return result;
+    }
 }

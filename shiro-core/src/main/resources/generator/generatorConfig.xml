@@ -61,15 +61,15 @@
         <!--<table tableName="role" domainObjectName="Role" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
             <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
-        <!--<table tableName="role_permission" domainObjectName="RolePermission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
-        <!--</table>-->
+        <table tableName="role_permission" domainObjectName="RolePermission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
         <!--<table tableName="staff_client" domainObjectName="StaffClient" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
             <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
-        <table tableName="user" domainObjectName="User" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
-            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
-        </table>
+        <!--<table tableName="user" domainObjectName="User" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
+            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--</table>-->
         <!--<table tableName="user_role" domainObjectName="UserRole" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
             <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->

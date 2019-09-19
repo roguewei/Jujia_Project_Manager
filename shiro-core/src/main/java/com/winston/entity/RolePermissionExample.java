@@ -264,52 +264,62 @@ public class RolePermissionExample {
             return (Criteria) this;
         }
 
-        public Criteria andPerIdEqualTo(Integer value) {
+        public Criteria andPerIdEqualTo(String value) {
             addCriterion("per_id =", value, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdNotEqualTo(Integer value) {
+        public Criteria andPerIdNotEqualTo(String value) {
             addCriterion("per_id <>", value, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdGreaterThan(Integer value) {
+        public Criteria andPerIdGreaterThan(String value) {
             addCriterion("per_id >", value, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPerIdGreaterThanOrEqualTo(String value) {
             addCriterion("per_id >=", value, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdLessThan(Integer value) {
+        public Criteria andPerIdLessThan(String value) {
             addCriterion("per_id <", value, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdLessThanOrEqualTo(Integer value) {
+        public Criteria andPerIdLessThanOrEqualTo(String value) {
             addCriterion("per_id <=", value, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdIn(List<Integer> values) {
+        public Criteria andPerIdLike(String value) {
+            addCriterion("per_id like", value, "perId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerIdNotLike(String value) {
+            addCriterion("per_id not like", value, "perId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerIdIn(List<String> values) {
             addCriterion("per_id in", values, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdNotIn(List<Integer> values) {
+        public Criteria andPerIdNotIn(List<String> values) {
             addCriterion("per_id not in", values, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdBetween(Integer value1, Integer value2) {
+        public Criteria andPerIdBetween(String value1, String value2) {
             addCriterion("per_id between", value1, value2, "perId");
             return (Criteria) this;
         }
 
-        public Criteria andPerIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andPerIdNotBetween(String value1, String value2) {
             addCriterion("per_id not between", value1, value2, "perId");
             return (Criteria) this;
         }

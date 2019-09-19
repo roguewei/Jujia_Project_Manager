@@ -12,4 +12,10 @@ public interface IPermissionService {
 
     void addAllUrl(Permission permission);
 
+    void addPermission(Permission permission);
+
+    void updatePermission(Permission permission);
+
+    void delPermission(Integer id);
+
 }

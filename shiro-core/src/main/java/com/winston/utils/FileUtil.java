@@ -6,10 +6,10 @@ import com.winston.utils.result.CodeMsg;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.FrameGrabber;
-import org.bytedeco.javacv.Java2DFrameConverter;
+//import org.bytedeco.javacv.FFmpegFrameGrabber;
+//import org.bytedeco.javacv.Frame;
+//import org.bytedeco.javacv.FrameGrabber;
+//import org.bytedeco.javacv.Java2DFrameConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -480,57 +480,57 @@ public class FileUtil {
         }
     }
 
-    /**
-     * 截取视频第 limit 帧的图片
-     *
-     * @param filePath 视频路径
-     * @return String 文件名
-     * @throws FrameGrabber.Exception
-     */
-    public String getVideothumbnailURL(String filePath, int limit) {
-        try {
-            String picPath = null;
-            FFmpegFrameGrabber ff = null;
-            File outPut = null;
-            String fileName = null;
-
-            ff = new FFmpegFrameGrabber(filePath);
-            ff.start();
-            //获取视频总帧数
-            int ffLength = ff.getLengthInFrames();
-            Frame frame;
-            int flag = 0;
-            if (limit > ffLength) {
-                return null;
-            }
-            while (flag < ffLength) {
-                frame = ff.grabImage();
-                /*
-                对视频的第limit帧进行处理
-                */
-                if (frame != null && flag == limit) {
-                    fileName = StringUtil.getRandomString(9) + flag + ".jpg";
-                    picPath = SAVE_DB_PATH + fileName;
-                    outPut = new File(picPath);
-                    ImageIO.write(getExecuteFrame(frame), "jpg", outPut);
-                }
-                flag++;
-            }
-            ff.stop();
-            return fileName;
-        } catch (FrameGrabber.Exception e) {
-            log.info("创建视频帧失败：{}", e.getMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private BufferedImage getExecuteFrame(Frame frame) {
-        Java2DFrameConverter converter = new Java2DFrameConverter();
-        BufferedImage bufferedImage = converter.getBufferedImage(frame);
-        return bufferedImage;
-    }
+//    /**
+//     * 截取视频第 limit 帧的图片
+//     *
+//     * @param filePath 视频路径
+//     * @return String 文件名
+//     * @throws FrameGrabber.Exception
+//     */
+//    public String getVideothumbnailURL(String filePath, int limit) {
+//        try {
+//            String picPath = null;
+//            FFmpegFrameGrabber ff = null;
+//            File outPut = null;
+//            String fileName = null;
+//
+//            ff = new FFmpegFrameGrabber(filePath);
+//            ff.start();
+//            //获取视频总帧数
+//            int ffLength = ff.getLengthInFrames();
+//            Frame frame;
+//            int flag = 0;
+//            if (limit > ffLength) {
+//                return null;
+//            }
+//            while (flag < ffLength) {
+//                frame = ff.grabImage();
+//                /*
+//                对视频的第limit帧进行处理
+//                */
+//                if (frame != null && flag == limit) {
+//                    fileName = StringUtil.getRandomString(9) + flag + ".jpg";
+//                    picPath = SAVE_DB_PATH + fileName;
+//                    outPut = new File(picPath);
+//                    ImageIO.write(getExecuteFrame(frame), "jpg", outPut);
+//                }
+//                flag++;
+//            }
+//            ff.stop();
+//            return fileName;
+//        } catch (FrameGrabber.Exception e) {
+//            log.info("创建视频帧失败：{}", e.getMessage());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//
+//    private BufferedImage getExecuteFrame(Frame frame) {
+//        Java2DFrameConverter converter = new Java2DFrameConverter();
+//        BufferedImage bufferedImage = converter.getBufferedImage(frame);
+//        return bufferedImage;
+//    }
 
 //
 //    /**

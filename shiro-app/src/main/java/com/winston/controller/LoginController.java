@@ -52,7 +52,7 @@ public class LoginController {
     @ApiResponse(code = 200, message = "成功请求", response = Result.class)
     @PostMapping("/login")
     public Result login(User user){
-        User user1 = userService.queryByUser(user);
+        User user1 = userService.selectByUsername(user.getUsername());
         String token = tokenService.getToken(user1);
         return Result.success(token);
     }

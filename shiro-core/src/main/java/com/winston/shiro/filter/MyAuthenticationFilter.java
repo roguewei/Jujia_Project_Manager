@@ -100,30 +100,30 @@ public class MyAuthenticationFilter extends AuthenticatingFilter {
                     return super.onPreHandle(request, response, mappedValue);
                 } else {
                     // 获取请求头带回来的token
-                    String token = httpServletRequest.getHeader(securityProperties.getJwt().getHeader());
-
-                    Subject subject = getSubject(request, response);
-                    Session session = redisService.get(SessionRedisKey.JSESSION_KEY, (String) subject.getSession().getId(), Session.class);
-                    if (token != null || session != null) {
-                        try {
-                            boolean exitToken = false;
-                            if(token != null){
-                                exitToken = tokenService.authToken(httpServletRequest);
-                            }
-//                            if((token != null && exitToken) || session != null){
-                            if(exitToken){
-                                return super.onPreHandle(request, response, mappedValue);
-                            }
-                            outPut(response);
-                            return false;
-                        } catch (Exception e) {
-                            outPut(response);
-                            return false;
-                        }
-                    }
-//                    return super.onPreHandle(request, response, mappedValue);
-                    outPut(response);
-                    return false;
+//                    String token = httpServletRequest.getHeader(securityProperties.getJwt().getHeader());
+//
+//                    Subject subject = getSubject(request, response);
+//                    Session session = redisService.get(SessionRedisKey.JSESSION_KEY, (String) subject.getSession().getId(), Session.class);
+//                    if (token != null || session != null) {
+//                        try {
+//                            boolean exitToken = false;
+//                            if(token != null){
+//                                exitToken = tokenService.authToken(httpServletRequest);
+//                            }
+////                            if((token != null && exitToken) || session != null){
+//                            if(exitToken){
+//                                return super.onPreHandle(request, response, mappedValue);
+//                            }
+//                            outPut(response);
+//                            return false;
+//                        } catch (Exception e) {
+//                            outPut(response);
+//                            return false;
+//                        }
+//                    }
+//                    outPut(response);
+//                    return false;
+                    return super.onPreHandle(request, response, mappedValue);
                 }
 
             }
