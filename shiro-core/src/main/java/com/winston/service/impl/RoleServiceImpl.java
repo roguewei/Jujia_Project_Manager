@@ -93,6 +93,15 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public void updateRole(Role role) {
+        if(role.getRoleName() == null || role.getRoleDesc() == null){
+            throw new ErrorException(CodeMsg.ROLE_UPDATE_ERROR);
+        }
+        RoleExample example = new RoleExample();
+        example.createCriteria().andRoleNameEqualTo(role.getRoleName()).andRoleDescEqualTo(role.getRoleDesc());
+        List<Role> roles = mapper.selectByExample(example);
+        if(roles != null && roles.size() > 0){
+            throw new ErrorException(CodeMsg.ROLE_ALERADY_EXIST);
+        }
         int i = mapper.updateByPrimaryKeySelective(role);
         if(i <= 0){
             throw new ErrorException(CodeMsg.ROLE_UPDATE_ERROR);

@@ -3,6 +3,7 @@ package com.winston.controller;
 import com.winston.annotation.NeedLog;
 import com.winston.entity.GroupRolePermission;
 import com.winston.entity.Role;
+import com.winston.entity.RoleExample;
 import com.winston.entity.RolePermission;
 import com.winston.service.IGroupRolePermissionService;
 import com.winston.service.IRoleService;
@@ -30,7 +31,7 @@ import java.util.List;
 @Validated
 @Api(description = "角色相关接口")
 @RestController
-@RequestMapping("/web/roles")
+@RequestMapping("/app/roles")
 public class RoleController {
 
     @Autowired
@@ -129,7 +130,8 @@ public class RoleController {
     @ApiOperation(value = "为角色分配权限", notes = "为角色分配权限")//接口说明
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色id", required = true, dataType = "Integer", paramType = "Integer"),
-            @ApiImplicitParam(name = "perId", value = "权限id", required = true, dataType = "Integer", paramType = "Integer"),
+            @ApiImplicitParam(name = "perId", value = "权限id（示例：1,2,3）", required = true, dataType = "String", paramType = "String"),
+            @ApiImplicitParam(name = "groupId", value = "组织id", required = true, dataType = "Integer", paramType = "Integer"),
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "成功请求", response = Result.class),

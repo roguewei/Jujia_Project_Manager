@@ -57,6 +57,7 @@ public class CodeMsg {
     public static CodeMsg SELECT_PERMOSSION_ERROR = new CodeMsg(500306, "请选择角色");
     public static CodeMsg SELECT__ERROR = new CodeMsg(500307, "分配角色出现异常");
     public static CodeMsg ROLE_HAS_USER_USE = new CodeMsg(500308, "该角色仍有用户使用,请先移除该角色用户");
+    public static CodeMsg ROLE_ALERADY_EXIST = new CodeMsg(500309, "该角色已存在");
 
     // 权限模块5004XX
     public static CodeMsg HAS_NOT_PERMISSION = new CodeMsg(500400, "您没有该权限");

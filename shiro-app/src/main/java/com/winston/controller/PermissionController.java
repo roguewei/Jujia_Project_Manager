@@ -90,7 +90,7 @@ public class PermissionController {
     @GetMapping("/del")
     public Result del(@NotNull(message = "权限id不能为空")Integer id){
         permissionService.delPermission(id);
-        return Result.success("修改成功");
+        return Result.success("删除成功");
     }
 
 }

@@ -73,11 +73,12 @@ public class RolePermissionServiceImpl implements IGroupRolePermissionService {
         GroupRolePermissionExample.Criteria criteria = example.createCriteria();
         if(groupRolePermission.getRoleId() != null){
             criteria.andRoleIdEqualTo(groupRolePermission.getRoleId());
+            mapper.deleteByExample(example);
         }
         if(groupRolePermission.getGroupId() != null){
             criteria.andGroupIdEqualTo(groupRolePermission.getGroupId());
+            mapper.deleteByExample(example);
         }
-        mapper.deleteByExample(example);
         //添加
         if(!StringUtils.isEmpty(groupRolePermission.getPerId())){
             String[] resourcesArr = groupRolePermission.getPerId().split(",");
@@ -95,7 +96,7 @@ public class RolePermissionServiceImpl implements IGroupRolePermissionService {
         }
 
         GroupUserRoleExample userRoleExample = new GroupUserRoleExample();
-        userRoleExample.createCriteria().andRoleIdEqualTo(groupRolePermission.getRoleId());
+//        userRoleExample.createCriteria().andRoleIdEqualTo(groupRolePermission.getRoleId());
         List<GroupUserRole> userRoles = groupUserRoleMapper.selectByExample(userRoleExample);
         List<Integer> userIds= new ArrayList<>();
         for(GroupUserRole userRole : userRoles){
