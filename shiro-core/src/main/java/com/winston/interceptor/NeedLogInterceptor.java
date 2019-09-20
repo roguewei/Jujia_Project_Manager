@@ -1,6 +1,13 @@
 package com.winston.interceptor;
 
 import com.winston.annotation.NeedLog;
+import com.winston.entity.LogInfo;
+import com.winston.entity.User;
+import com.winston.service.ILogInfoService;
+import com.winston.service.IUserService;
+import com.winston.utils.HttpUtil;
+import com.winston.utils.jwt.RawAccessJwtToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +26,15 @@ import java.util.Date;
  */
 @Component
 public class NeedLogInterceptor extends HandlerInterceptorAdapter {
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private ILogInfoService logInfoService;
+
+    @Autowired
+    private RawAccessJwtToken rawAccessJwtToken;
 
     /**
      * @Author Winston
@@ -79,26 +95,26 @@ public class NeedLogInterceptor extends HandlerInterceptorAdapter {
             NeedLog needLog = method.getMethodAnnotation(NeedLog.class);
             if(needLog != null){
                 if(needLog.isNeed()){
-//                    if("login".equals(requestMethod)){
-//                        User user = userService.selectByUsername(request.getParameter("username"));
-//                        userId = user.getId();
-//                    }else{
-//                        userId = rawAccessJwtToken.getUserId(request);
-//                    }
-//                    String operator = needLog.operator();
-//                    LogInfo logInfo = new LogInfo();
-//                    logInfo.setCreateTime(new Date().getTime());
-//                    logInfo.setIpAddress(IpUtil.getIpAdrress(request));
-//                    logInfo.setLogType(operator);
-//                    logInfo.setUserId(userId);
-//                    logInfo.setResultType(resType);
-//                    logInfo.setOperatordesc(needLog.operatorDesc());
-//                    result = logInfoService.addLogInfo(logInfo);
-//                    if(result && "1".equals(resType)){
-//                        request.setAttribute("success", true);
-//                    }else{
-//                        request.setAttribute("success", false);
-//                    }
+                    if("login".equals(requestMethod)){
+                        User user = userService.selectByUsername(request.getParameter("username"));
+                        userId = user.getId();
+                    }else{
+                        userId = rawAccessJwtToken.getUserId();
+                    }
+                    String operator = needLog.operator();
+                    LogInfo logInfo = new LogInfo();
+                    logInfo.setCreateTime(new Date().getTime());
+                    logInfo.setIpAddress(HttpUtil.getIpAdrress(request));
+                    logInfo.setLogType(operator);
+                    logInfo.setUserId(userId);
+                    logInfo.setResultType(resType);
+                    logInfo.setOperatordesc(needLog.operatorDesc());
+                    result = logInfoService.addLogInfo(logInfo);
+                    if(result && "1".equals(resType)){
+                        request.setAttribute("success", true);
+                    }else{
+                        request.setAttribute("success", false);
+                    }
                 }
             }
         }

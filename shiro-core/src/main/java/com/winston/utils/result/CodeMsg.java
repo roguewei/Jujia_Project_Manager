@@ -37,6 +37,7 @@ public class CodeMsg {
     public static CodeMsg FILE_TOO_BIG = new CodeMsg(500116  , "上传图片过大，请重新上传");
     public static CodeMsg USER_DEL_FAILE = new CodeMsg(500117  , "用户删除失败");
     public static CodeMsg DICTIONARY_ALERADY_EXIST = new CodeMsg(500118  , "已存在该字典项");
+    public static final CodeMsg MYSQL_DATA_ERROR = new CodeMsg(500119  , "上传数据格式错误");
 
     // 登录模块5002XX
     public static CodeMsg USER_IS_NULL = new CodeMsg(500200, "操作对象不存在");

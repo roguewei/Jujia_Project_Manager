@@ -140,7 +140,7 @@ public class RoleController {
     @PostMapping("/saveGroupRolePermission")
     @NeedLog(operator = "5", operatorDesc = "为角色分配权限")
     public Result saveRolePermission(GroupRolePermission groupRolePermission) {
-        if (StringUtils.isEmpty(groupRolePermission.getRoleId())){
+        if (StringUtils.isEmpty(groupRolePermission.getRoleId()) && StringUtils.isEmpty(groupRolePermission.getGroupId())){
             return Result.error(CodeMsg.SELECT_ROLE_ERROR);
         }
         if (StringUtils.isEmpty(groupRolePermission.getPerId())){

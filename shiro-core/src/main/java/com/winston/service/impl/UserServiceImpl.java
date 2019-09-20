@@ -34,7 +34,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result queryByUser(User user, int page, int length) {
-        String userName = rawAccessJwtToken.getUserName();
         PageHelper.startPage(page, length);
 
         UserExample example = new UserExample();
@@ -70,6 +69,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User selectById(Integer id) {
         User user = mapper.selectByPrimaryKey(id);
+        user.setPassword("");
         return user;
     }
 
@@ -77,8 +77,6 @@ public class UserServiceImpl implements IUserService {
     public User selectByOpenId(String openId) {
         return null;
     }
-
-
 
     @Override
     public void save(WeChatUser weChatUser) {
@@ -104,13 +102,22 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public int save(User user) {
-        String nicname = rawAccessJwtToken.getUserName();
+
+        if(user.getUsername() == null){
+            throw new ErrorException(CodeMsg.USER_ADD_FAILE);
+        }
+        User dbUser = selectByUsername(user.getUsername());
+        if(dbUser != null){
+            throw new ErrorException(CodeMsg.USER_ALREADY_EXIST);
+        }
+
+        String manager = rawAccessJwtToken.getUserName();
         long nowTime = new Date().getTime();
 
         user.setStatus(1);
-        user.setCreateOpr(nicname);
+        user.setCreateOpr(manager);
         user.setCreateTime(nowTime);
-        user.setUpdateOpr(nicname);
+        user.setUpdateOpr(manager);
         user.setUpdateTime(nowTime);
 //        user.setOperatorType("0");
         PasswordHelper passwordHelper = new PasswordHelper();
@@ -121,6 +128,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void update(User user) {
+        user.setPassword(null);
         int i = mapper.updateByPrimaryKeySelective(user);
         if(i <= 0){
             throw new ErrorException(CodeMsg.USER_UPDATE_FAILED);

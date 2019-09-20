@@ -65,9 +65,22 @@ public class GroupUserRoleServiceImpl implements IGroupUserRoleService {
     @Override
     public void addGroupUserRole(GroupUserRole groupUserRole) {
         // 删除
-        GroupUserRoleExample example = new GroupUserRoleExample();
-        example.createCriteria().andUserIdEqualTo(groupUserRole.getUserId());
-        mapper.deleteByExample(example);
+        if(groupUserRole.getRoleId() != null){
+            GroupUserRoleExample example = new GroupUserRoleExample();
+            example.createCriteria().andUserIdEqualTo(groupUserRole.getUserId()).andRoleIdIsNotNull();
+            List<GroupUserRole> groupUserRoles = mapper.selectByExample(example);
+            if(groupUserRoles != null && groupUserRoles.size() > 0 && groupUserRoles.get(0).getRoleId() != null){
+                mapper.deleteByExample(example);
+            }
+        }
+        if(groupUserRole.getGroupId() != null){
+            GroupUserRoleExample example = new GroupUserRoleExample();
+            example.createCriteria().andUserIdEqualTo(groupUserRole.getUserId()).andGroupIdIsNotNull();
+            List<GroupUserRole> groupUserRoles = mapper.selectByExample(example);
+            if(groupUserRoles != null && groupUserRoles.size() > 0 && groupUserRoles.get(0).getGroupId() != null){
+                mapper.deleteByExample(example);
+            }
+        }
         // 添加
         mapper.insert(groupUserRole);
 

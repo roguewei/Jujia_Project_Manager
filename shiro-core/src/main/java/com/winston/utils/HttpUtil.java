@@ -6,6 +6,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Winston
@@ -38,6 +39,18 @@ public class HttpUtil {
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return servletRequestAttributes.getRequest();
+    }
+
+    /**
+     * @Author Winston
+     * @Description 获取当前请求的Response
+     * @Date 11:45 2019/7/24
+     * @Param
+     * @return
+     **/
+    public static HttpServletResponse getResponse() {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return servletRequestAttributes.getResponse();
     }
 
     /**

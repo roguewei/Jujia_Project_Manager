@@ -2,6 +2,8 @@ package com.winston.controller;
 
 import com.winston.properties.SecurityProperties;
 import com.winston.utils.imageCode.ImageCode;
+import com.winston.utils.result.Result;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
@@ -25,6 +27,7 @@ import java.util.Random;
  * @Date 2019/4/15 21:13
  * @Version 1.0
  **/
+@Api(description = "动态验证码相关接口")
 @RestController
 public class ValidateCodeController {
 
@@ -37,6 +40,14 @@ public class ValidateCodeController {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @ApiOperation(value = "验证码图片生成", notes = "验证码图片生成")//接口说明
+    @ApiImplicitParams({
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功请求", response = Result.class),
+            @ApiResponse(code = 500400, message = "无权限访问"),
+            @ApiResponse(code = 500105, message = "未登录")
+    })
     @GetMapping("/code/image")
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -54,7 +65,7 @@ public class ValidateCodeController {
         int width = ServletRequestUtils.getIntParameter(request.getRequest(),
                 "width", securityProperties.getCode().getImage().getWidth());
         int height = ServletRequestUtils.getIntParameter(request.getRequest(),
-                "height", securityProperties.getCode().getImage().getHeight());;
+                "height", securityProperties.getCode().getImage().getHeight());
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         Graphics g = image.getGraphics();

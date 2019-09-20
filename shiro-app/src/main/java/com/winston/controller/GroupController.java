@@ -5,12 +5,14 @@ import com.winston.service.IGroupService;
 import com.winston.utils.result.Result;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ import java.util.Map;
  * @Version：
  */
 @Api(description = "组织相关接口")
+@Validated
 @RestController
 @RequestMapping("/app/group")
 public class GroupController {
@@ -56,7 +59,7 @@ public class GroupController {
             @ApiResponse(code = 500105, message = "未登录")
     })
     @GetMapping("/queryById")
-    public Result queryById(Integer id){
+    public Result queryById(@NotNull(message = "请传递组织编号") Integer id){
         Map<String, Object> group = groupService.queryById(id);
         return Result.success(group);
     }
@@ -98,8 +101,17 @@ public class GroupController {
         return Result.success("修改组织成功");
     }
 
+    @ApiOperation(value = "删除组织", notes = "删除组织")//接口说明
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "组织编号", required = true, dataType = "Integer", paramType = "Integer"),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功请求", response = Result.class),
+            @ApiResponse(code = 500400, message = "无权限访问"),
+            @ApiResponse(code = 500105, message = "未登录")
+    })
     @GetMapping("/delById")
-    public Result delById(Integer id){
+    public Result delById(@NotNull(message = "请传递组织编号")Integer id){
        groupService.delGroup(id);
         return Result.success("删除成功");
     }

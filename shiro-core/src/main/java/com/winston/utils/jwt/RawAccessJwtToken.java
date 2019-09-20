@@ -2,8 +2,10 @@ package com.winston.utils.jwt;
 
 
 import com.winston.constant.Commons;
+import com.winston.exception.ErrorException;
 import com.winston.properties.SecurityProperties;
 import com.winston.utils.HttpUtil;
+import com.winston.utils.result.CodeMsg;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -69,6 +71,9 @@ public class RawAccessJwtToken implements JwtToken {
     public Claims getClaims() {
         setRequest(HttpUtil.getRequest());
         Jws<Claims> claimsJws = parseClaims(securityProperties.getJwt().getTokenSigningKey());
+        if(claimsJws == null){
+            return null;
+        }
         return claimsJws.getBody();
     }
 
@@ -76,6 +81,8 @@ public class RawAccessJwtToken implements JwtToken {
     public Integer getUserId() {
         setRequest(HttpUtil.getRequest());
         Claims claims = getClaims();
+        if(claims == null)
+            return null;
         return claims.get(Commons.USER_ID, Integer.class);
     }
 
@@ -83,6 +90,8 @@ public class RawAccessJwtToken implements JwtToken {
     public String getUserName() {
         setRequest(HttpUtil.getRequest());
         Claims claims = getClaims();
+        if(claims == null)
+            return null;
         return claims.get("username", String.class);
     }
 }

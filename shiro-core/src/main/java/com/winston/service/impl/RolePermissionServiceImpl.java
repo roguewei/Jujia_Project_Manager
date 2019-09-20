@@ -2,6 +2,7 @@ package com.winston.service.impl;
 
 import com.winston.entity.*;
 import com.winston.mapper.GroupRolePermissionMapper;
+import com.winston.mapper.GroupUserRoleMapper;
 import com.winston.mapper.RolePermissionMapper;
 import com.winston.mapper.UserRoleMapper;
 import com.winston.service.IGroupRolePermissionService;
@@ -27,23 +28,29 @@ public class RolePermissionServiceImpl implements IGroupRolePermissionService {
     private GroupRolePermissionMapper mapper;
 
     @Autowired
-    private UserRoleMapper userRoleMapper;
+    private GroupUserRoleMapper groupUserRoleMapper;
 
     @Autowired
     private MyShiroRealm myShiroRealm;
 
     @Override
     public List<GroupRolePermission> queryByRoleIds(List<Integer> roleIds) {
-        GroupRolePermissionExample example = new GroupRolePermissionExample();
-        example.createCriteria().andRoleIdIn(roleIds);
-        return mapper.selectByExample(example);
+        if(roleIds != null && roleIds.size() > 0){
+            GroupRolePermissionExample example = new GroupRolePermissionExample();
+            example.createCriteria().andRoleIdIn(roleIds);
+            return mapper.selectByExample(example);
+        }
+        return null;
     }
 
     @Override
     public List<GroupRolePermission> queryByGroupIds(List<Integer> groupIds) {
-        GroupRolePermissionExample example = new GroupRolePermissionExample();
-        example.createCriteria().andGroupIdIn(groupIds);
-        return mapper.selectByExample(example);
+        if(groupIds != null && groupIds.size() > 0){
+            GroupRolePermissionExample example = new GroupRolePermissionExample();
+            example.createCriteria().andGroupIdIn(groupIds);
+            return mapper.selectByExample(example);
+        }
+        return null;
     }
 
     @Override
@@ -64,24 +71,34 @@ public class RolePermissionServiceImpl implements IGroupRolePermissionService {
         //删除
         GroupRolePermissionExample example = new GroupRolePermissionExample();
         GroupRolePermissionExample.Criteria criteria = example.createCriteria();
-        criteria.andRoleIdEqualTo(groupRolePermission.getRoleId());
+        if(groupRolePermission.getRoleId() != null){
+            criteria.andRoleIdEqualTo(groupRolePermission.getRoleId());
+        }
+        if(groupRolePermission.getGroupId() != null){
+            criteria.andGroupIdEqualTo(groupRolePermission.getGroupId());
+        }
         mapper.deleteByExample(example);
         //添加
         if(!StringUtils.isEmpty(groupRolePermission.getPerId())){
             String[] resourcesArr = groupRolePermission.getPerId().split(",");
             for(String resourcesId:resourcesArr ){
                 GroupRolePermission r = new GroupRolePermission();
-                r.setRoleId(groupRolePermission.getRoleId());
+                if(groupRolePermission.getRoleId() != null){
+                    r.setRoleId(groupRolePermission.getRoleId());
+                }
+                if(groupRolePermission.getGroupId() != null){
+                    r.setGroupId(groupRolePermission.getGroupId());
+                }
                 r.setPerId(resourcesId);
                 mapper.insert(r);
             }
         }
 
-        UserRoleExample userRoleExample = new UserRoleExample();
+        GroupUserRoleExample userRoleExample = new GroupUserRoleExample();
         userRoleExample.createCriteria().andRoleIdEqualTo(groupRolePermission.getRoleId());
-        List<UserRole> userRoles = userRoleMapper.selectByExample(userRoleExample);
+        List<GroupUserRole> userRoles = groupUserRoleMapper.selectByExample(userRoleExample);
         List<Integer> userIds= new ArrayList<>();
-        for(UserRole userRole : userRoles){
+        for(GroupUserRole userRole : userRoles){
             userIds.add(userRole.getUserId());
         }
         //更新当前登录的用户的权限缓存
