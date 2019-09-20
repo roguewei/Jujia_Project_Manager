@@ -1,14 +1,11 @@
 package com.winston.service.impl;
 
-import com.winston.entity.Role;
-import com.winston.entity.RoleExample;
-import com.winston.entity.User;
-import com.winston.entity.UserRole;
+import com.winston.entity.*;
 import com.winston.exception.ErrorException;
 import com.winston.mapper.RoleMapper;
-import com.winston.service.IRolePermissionService;
+import com.winston.service.IGroupRolePermissionService;
+import com.winston.service.IGroupUserRoleService;
 import com.winston.service.IRoleService;
-import com.winston.service.IUserRoleService;
 import com.winston.service.IUserService;
 import com.winston.utils.result.CodeMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +28,10 @@ public class RoleServiceImpl implements IRoleService {
     private RoleMapper mapper;
 
     @Autowired
-    private IRolePermissionService rolePermissionService;
+    private IGroupRolePermissionService rolePermissionService;
 
     @Autowired
-    private IUserRoleService userRoleService;
+    private IGroupUserRoleService userRoleService;
 
     @Autowired
     private IUserService userService;
@@ -74,10 +71,10 @@ public class RoleServiceImpl implements IRoleService {
     public List<Role> queryByUserName(String username) {
         User user = userService.selectByUsername(username);
         if(user != null){
-            List<UserRole> userRoles = userRoleService.queryByUserId(user.getId());
+            List<GroupUserRole> userRoles = userRoleService.queryByUserId(user.getId());
             if(userRoles != null && userRoles.size() > 0){
                 List<Integer> roleIds = new ArrayList<>();
-                for(UserRole userRole : userRoles){
+                for(GroupUserRole userRole : userRoles){
                     roleIds.add(userRole.getRoleId());
                 }
                 return queryByIds(roleIds);
@@ -104,7 +101,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public void delRole(Integer roleid) {
-        List<UserRole> userRoles = userRoleService.queryByRoleId(roleid);
+        List<GroupUserRole> userRoles = userRoleService.queryByRoleId(roleid);
         if(userRoles != null && userRoles.size() > 0){
             throw new ErrorException(CodeMsg.ROLE_HAS_USER_USE);
         }

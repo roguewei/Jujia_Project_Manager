@@ -35,6 +35,8 @@ public class CodeMsg {
     public static CodeMsg WECHAT_SEND_TEMPLATEID_ERROR = new CodeMsg(500114  , "模板消息发送失败");
     public static CodeMsg FILE_YASUO_ERROR = new CodeMsg(500115  , "图片压缩失败");
     public static CodeMsg FILE_TOO_BIG = new CodeMsg(500116  , "上传图片过大，请重新上传");
+    public static CodeMsg USER_DEL_FAILE = new CodeMsg(500117  , "用户删除失败");
+    public static CodeMsg DICTIONARY_ALERADY_EXIST = new CodeMsg(500118  , "已存在该字典项");
 
     // 登录模块5002XX
     public static CodeMsg USER_IS_NULL = new CodeMsg(500200, "操作对象不存在");
@@ -129,6 +131,9 @@ public class CodeMsg {
     public static CodeMsg DIFFAMILY_ALREADY_EXIST = new CodeMsg(501302, "该家庭信息已存在");
     public static CodeMsg DIFFAMILY_DEL_ERROR = new CodeMsg(501303, "家庭信息删除失败");
     public static CodeMsg DIFFAMILY_ADD_ERROR = new CodeMsg(501304, "家庭信息新增失败");
+
+    // 组模块5014XX
+    public static CodeMsg Group_ALREADY_EXIST = new CodeMsg(501400, "请填写户主姓名");
 
     public CodeMsg(int code, String msg) {
         this.status = code;

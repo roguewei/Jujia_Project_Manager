@@ -22,4 +22,8 @@ public interface IUserService {
 
     int save(User user);
 
+    void update(User user);
+
+    void delete(Integer id);
+
 }

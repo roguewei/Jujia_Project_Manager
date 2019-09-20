@@ -61,6 +61,7 @@ public class FileUtil {
                     path.mkdirs();
                 }
                 String uploadPath = SAVE_DB_PATH + filename;
+                String fileHttpUrl = PATH_HTTP + filename;
 
                 File excelFile = new File(uploadPath);
                 file.transferTo(excelFile);
@@ -69,6 +70,7 @@ public class FileUtil {
 
                 res.put("fileName", filename);
                 res.put("filePath", uploadPath);
+                res.put("fileHttpUrl", fileHttpUrl);
                 return res;
             } catch (Exception e) {
                 e.printStackTrace();

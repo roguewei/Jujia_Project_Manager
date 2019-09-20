@@ -1,12 +1,10 @@
 package com.winston.service.impl;
 
-import com.winston.entity.RolePermissionExample;
-import com.winston.entity.RolePermission;
-import com.winston.entity.UserRole;
-import com.winston.entity.UserRoleExample;
+import com.winston.entity.*;
+import com.winston.mapper.GroupRolePermissionMapper;
 import com.winston.mapper.RolePermissionMapper;
 import com.winston.mapper.UserRoleMapper;
-import com.winston.service.IRolePermissionService;
+import com.winston.service.IGroupRolePermissionService;
 import com.winston.shiro.MyShiroRealm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +21,10 @@ import java.util.List;
  * @date 2019/7/24 14:32
  */
 @Service
-public class RolePermissionServiceImpl implements IRolePermissionService {
+public class RolePermissionServiceImpl implements IGroupRolePermissionService {
 
     @Autowired
-    private RolePermissionMapper mapper;
+    private GroupRolePermissionMapper mapper;
 
     @Autowired
     private UserRoleMapper userRoleMapper;
@@ -35,20 +33,26 @@ public class RolePermissionServiceImpl implements IRolePermissionService {
     private MyShiroRealm myShiroRealm;
 
     @Override
-    public List<RolePermission> queryByRoleIds(List<Integer> roleIds) {
-        RolePermissionExample example = new RolePermissionExample();
+    public List<GroupRolePermission> queryByRoleIds(List<Integer> roleIds) {
+        GroupRolePermissionExample example = new GroupRolePermissionExample();
         example.createCriteria().andRoleIdIn(roleIds);
-        List<RolePermission> rolePermissionKeys = mapper.selectByExample(example);
-        return rolePermissionKeys;
+        return mapper.selectByExample(example);
     }
 
     @Override
-    public List<RolePermission> queryByPerIds(Integer perId) {
-        RolePermissionExample example = new RolePermissionExample();
-        RolePermissionExample.Criteria criteria = example.createCriteria();
+    public List<GroupRolePermission> queryByGroupIds(List<Integer> groupIds) {
+        GroupRolePermissionExample example = new GroupRolePermissionExample();
+        example.createCriteria().andGroupIdIn(groupIds);
+        return mapper.selectByExample(example);
+    }
+
+    @Override
+    public List<GroupRolePermission> queryByPerIds(Integer perId) {
+        GroupRolePermissionExample example = new GroupRolePermissionExample();
+        GroupRolePermissionExample.Criteria criteria = example.createCriteria();
         if(perId != null){
             criteria.andPerIdEqualTo(String.valueOf(perId));
-            List<RolePermission> rolePermissions = mapper.selectByExample(example);
+            List<GroupRolePermission> rolePermissions = mapper.selectByExample(example);
             return rolePermissions;
         }
         return null;
@@ -56,25 +60,25 @@ public class RolePermissionServiceImpl implements IRolePermissionService {
 
     //更新权限
     @Override
-    public void addRolePermission(RolePermission rolePermission) {
+    public void addGroupRolePermission(GroupRolePermission groupRolePermission) {
         //删除
-        RolePermissionExample example = new RolePermissionExample();
-        RolePermissionExample.Criteria criteria = example.createCriteria();
-        criteria.andRoleIdEqualTo(rolePermission.getRoleId());
+        GroupRolePermissionExample example = new GroupRolePermissionExample();
+        GroupRolePermissionExample.Criteria criteria = example.createCriteria();
+        criteria.andRoleIdEqualTo(groupRolePermission.getRoleId());
         mapper.deleteByExample(example);
         //添加
-        if(!StringUtils.isEmpty(rolePermission.getPerId())){
-            String[] resourcesArr = rolePermission.getPerId().split(",");
+        if(!StringUtils.isEmpty(groupRolePermission.getPerId())){
+            String[] resourcesArr = groupRolePermission.getPerId().split(",");
             for(String resourcesId:resourcesArr ){
-                RolePermission r = new RolePermission();
-                r.setRoleId(rolePermission.getRoleId());
+                GroupRolePermission r = new GroupRolePermission();
+                r.setRoleId(groupRolePermission.getRoleId());
                 r.setPerId(resourcesId);
                 mapper.insert(r);
             }
         }
 
         UserRoleExample userRoleExample = new UserRoleExample();
-        userRoleExample.createCriteria().andRoleIdEqualTo(rolePermission.getRoleId());
+        userRoleExample.createCriteria().andRoleIdEqualTo(groupRolePermission.getRoleId());
         List<UserRole> userRoles = userRoleMapper.selectByExample(userRoleExample);
         List<Integer> userIds= new ArrayList<>();
         for(UserRole userRole : userRoles){
@@ -86,7 +90,7 @@ public class RolePermissionServiceImpl implements IRolePermissionService {
 
     @Override
     public void deleteByRoleId(Integer roleId) {
-        RolePermissionExample example = new RolePermissionExample();
+        GroupRolePermissionExample example = new GroupRolePermissionExample();
         example.createCriteria().andRoleIdEqualTo(roleId);
         mapper.deleteByExample(example);
     }

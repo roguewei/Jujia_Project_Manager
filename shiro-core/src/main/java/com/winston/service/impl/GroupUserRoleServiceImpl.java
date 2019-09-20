@@ -1,10 +1,8 @@
 package com.winston.service.impl;
 
-import com.winston.entity.User;
-import com.winston.entity.UserRoleExample;
-import com.winston.entity.UserRole;
-import com.winston.mapper.UserRoleMapper;
-import com.winston.service.IUserRoleService;
+import com.winston.entity.*;
+import com.winston.mapper.GroupUserRoleMapper;
+import com.winston.service.IGroupUserRoleService;
 import com.winston.service.IUserService;
 import com.winston.shiro.MyShiroRealm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +19,10 @@ import java.util.List;
  * @date 2019/7/24 14:33
  */
 @Service
-public class UserRoleServiceImpl implements IUserRoleService {
+public class GroupUserRoleServiceImpl implements IGroupUserRoleService {
 
     @Autowired
-    private UserRoleMapper mapper;
+    private GroupUserRoleMapper mapper;
 
     @Autowired
     private IUserService userService;
@@ -33,29 +31,29 @@ public class UserRoleServiceImpl implements IUserRoleService {
     private MyShiroRealm myShiroRealm;
 
     @Override
-    public List<UserRole> queryByUserId(Integer userId) {
-        UserRoleExample example = new UserRoleExample();
+    public List<GroupUserRole> queryByUserId(Integer userId) {
+        GroupUserRoleExample example = new GroupUserRoleExample();
         example.createCriteria().andUserIdEqualTo(userId);
-        List<UserRole> userRoleKeys = mapper.selectByExample(example);
+        List<GroupUserRole> userRoleKeys = mapper.selectByExample(example);
         return userRoleKeys;
     }
 
     @Override
-    public List<UserRole> queryByRoleId(Integer roleId) {
-        UserRoleExample example = new UserRoleExample();
+    public List<GroupUserRole> queryByRoleId(Integer roleId) {
+        GroupUserRoleExample example = new GroupUserRoleExample();
         example.createCriteria().andRoleIdEqualTo(roleId);
-        List<UserRole> userRoles = mapper.selectByExample(example);
-        return userRoles;
+        List<GroupUserRole> groupUserRoles = mapper.selectByExample(example);
+        return groupUserRoles;
     }
 
     @Override
     public List<Integer> getRoleIdsByUserName(String username) {
         User user = userService.selectByUsername(username);
         if(user != null){
-            List<UserRole> userRoles = queryByUserId(user.getId());
-            if(userRoles != null && userRoles.size() > 0) {
+            List<GroupUserRole> groupUserRoles = queryByUserId(user.getId());
+            if(groupUserRoles != null && groupUserRoles.size() > 0) {
                 List<Integer> roleIds = new ArrayList<>();
-                for (UserRole userRole : userRoles) {
+                for (GroupUserRole userRole : groupUserRoles) {
                     roleIds.add(userRole.getRoleId());
                 }
                 return roleIds;
@@ -65,17 +63,17 @@ public class UserRoleServiceImpl implements IUserRoleService {
     }
 
     @Override
-    public void addUserRole(UserRole userRole) {
+    public void addGroupUserRole(GroupUserRole groupUserRole) {
         // 删除
-        UserRoleExample example = new UserRoleExample();
-        example.createCriteria().andUserIdEqualTo(userRole.getUserId());
+        GroupUserRoleExample example = new GroupUserRoleExample();
+        example.createCriteria().andUserIdEqualTo(groupUserRole.getUserId());
         mapper.deleteByExample(example);
         // 添加
-        mapper.insert(userRole);
+        mapper.insert(groupUserRole);
 
         //更新当前登录的用户的权限缓存
         List<Integer> userid = new ArrayList<Integer>();
-        userid.add(userRole.getUserId());
+        userid.add(groupUserRole.getUserId());
         myShiroRealm.clearUserAuthByUserId(userid);
     }
 }

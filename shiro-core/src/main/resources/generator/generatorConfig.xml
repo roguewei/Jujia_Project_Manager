@@ -6,16 +6,19 @@
 <generatorConfiguration>
 
     <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
-    <classPathEntry  location="C:\Users\Winston\.m2\hqtyRepository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
-    <context id="DB2Tables"  targetRuntime="MyBatis3" >
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+    <classPathEntry
+            location="C:\Users\Winston\.m2\hqtyRepository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <commentGenerator>
             <property name="suppressDate" value="true"/>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="false"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/project_manager?serverTimezone=GMT%2B8" userId="root" password="123456">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/project_manager?serverTimezone=GMT%2B8" userId="root"
+                        password="123456">
             <!-- 添加下面一个属性才可以识别主键问题 -->
             <property name="useInformationSchema" value="true"></property>
 
@@ -40,39 +43,50 @@
         <!--  如若修改字段，修改字段要把原有的 **mapper.xml删除再生产 -->
 
         <!--<table tableName="log_info" domainObjectName="LogInfo" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
         <!--<table tableName="cli_staff_project" domainObjectName="CliStaffProject" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
         <!--<table tableName="dictionary" domainObjectName="Dictionary" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
         <!--<table tableName="permission" domainObjectName="Permission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
         <!--<table tableName="project" domainObjectName="Project" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
 
         <!--<table tableName="project_log" domainObjectName="ProjectLog" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
         <!--<table tableName="role" domainObjectName="Role" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
-        <table tableName="role_permission" domainObjectName="RolePermission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
-            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
-        </table>
+        <!--<table tableName="group_role_permission" domainObjectName="GroupRolePermission" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--</table>-->
         <!--<table tableName="staff_client" domainObjectName="StaffClient" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
         <!--<table tableName="user" domainObjectName="User" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
-        <!--<table tableName="user_role" domainObjectName="UserRole" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
-            <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--<table tableName="group_user_role" domainObjectName="GroupUserRole" selectByExampleQueryId="true" enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
         <!--</table>-->
+        <table tableName="pro_group" domainObjectName="ProGroup" selectByExampleQueryId="true" enableSelectByExample="true"
+               enableDeleteByExample="true" enableUpdateByExample="true" enableCountByExample="true" enableInsert="true"
+               enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">
+            <generatedKey identity="true" sqlStatement="Mysql" column="id"/>
+        </table>
 
-        </context>
-    </generatorConfiguration>
+        <!--<table tableName="picture" domainObjectName="Picture" selectByExampleQueryId="true"-->
+        <!--enableSelectByExample="true" enableDeleteByExample="true" enableUpdateByExample="true"-->
+        <!--enableCountByExample="true" enableInsert="true" enableDeleteByPrimaryKey="true"-->
+        <!--enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true">-->
+        <!--<generatedKey identity="true" sqlStatement="Mysql" column="id"/>-->
+        <!--</table>-->
+    </context>
+</generatorConfiguration>

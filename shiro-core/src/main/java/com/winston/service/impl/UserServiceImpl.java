@@ -3,9 +3,11 @@ package com.winston.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.winston.entity.User;
 import com.winston.entity.UserExample;
+import com.winston.exception.ErrorException;
 import com.winston.mapper.UserMapper;
 import com.winston.service.IUserService;
 import com.winston.utils.jwt.RawAccessJwtToken;
+import com.winston.utils.result.CodeMsg;
 import com.winston.utils.result.Result;
 import com.winston.utils.shiro.PasswordHelper;
 import com.winston.utils.wechat.WeChatUser;
@@ -32,6 +34,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Result queryByUser(User user, int page, int length) {
+        String userName = rawAccessJwtToken.getUserName();
         PageHelper.startPage(page, length);
 
         UserExample example = new UserExample();
@@ -114,6 +117,25 @@ public class UserServiceImpl implements IUserService {
         passwordHelper.encryptPassword(user);
         mapper.insert(user);
         return user.getId();
+    }
+
+    @Override
+    public void update(User user) {
+        int i = mapper.updateByPrimaryKeySelective(user);
+        if(i <= 0){
+            throw new ErrorException(CodeMsg.USER_UPDATE_FAILED);
+        }
+    }
+
+    @Override
+    public void delete(Integer id) {
+        User user = mapper.selectByPrimaryKey(id);
+        if(user != null){
+            user.setStatus(0);
+            mapper.updateByPrimaryKeySelective(user);
+        }else{
+            throw new ErrorException(CodeMsg.USER_DEL_FAILE);
+        }
     }
 
     //    @Override

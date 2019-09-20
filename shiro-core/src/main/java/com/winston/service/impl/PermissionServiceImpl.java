@@ -3,9 +3,9 @@ package com.winston.service.impl;
 import com.winston.entity.*;
 import com.winston.exception.ErrorException;
 import com.winston.mapper.PermissionMapper;
+import com.winston.service.IGroupRolePermissionService;
+import com.winston.service.IGroupUserRoleService;
 import com.winston.service.IPermissionService;
-import com.winston.service.IRolePermissionService;
-import com.winston.service.IUserRoleService;
 import com.winston.service.IUserService;
 import com.winston.utils.result.CodeMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class PermissionServiceImpl implements IPermissionService {
     private IUserService userService;
 
     @Autowired
-    private IUserRoleService userRoleService;
+    private IGroupUserRoleService groupUserRoleService;
 
     @Autowired
-    private IRolePermissionService rolePermissionService;
+    private IGroupRolePermissionService groupRolePermissionService;
 
     @Override
     public List<Permission> queryAll() {
@@ -45,24 +45,81 @@ public class PermissionServiceImpl implements IPermissionService {
     public List<Permission> queryByUserName(String username) {
         User user = userService.selectByUsername(username);
         if(user != null){
-            List<UserRole> userRoleKeys = userRoleService.queryByUserId(user.getId());
+            List<GroupUserRole> userRoleKeys = groupUserRoleService.queryByUserId(user.getId());
             if(userRoleKeys != null && userRoleKeys.size() > 0){
                 List<Integer> roleIds = new ArrayList<>();
-                for(UserRole userRole : userRoleKeys){
-                    roleIds.add(Integer.valueOf(userRole.getRoleId()));
+                List<Integer> groupIds = new ArrayList<>();
+                for(GroupUserRole userRole : userRoleKeys){
+                    if(userRole.getRoleId() != null){
+                        roleIds.add(userRole.getRoleId());
+                    }
+                    if(userRole.getGroupId() != null){
+                        groupIds.add(userRole.getGroupId());
+                    }
                 }
-                List<RolePermission> rolePermissionKeys = rolePermissionService.queryByRoleIds(roleIds);
+                List<GroupRolePermission> rolePermissionKeys = groupRolePermissionService.queryByRoleIds(roleIds);
+                List<GroupRolePermission> groupRolePermissions = groupRolePermissionService.queryByGroupIds(groupIds);
+                List<Permission> permissionListByRoleId = null;
+                List<Permission> permissionListByGroupId = null;
                 if(rolePermissionKeys != null && rolePermissionKeys.size() > 0){
                     List<Integer> perIds = new ArrayList<>();
-                    for(RolePermission rolePer : rolePermissionKeys){
+                    for(GroupRolePermission rolePer : rolePermissionKeys){
                         perIds.add(Integer.valueOf(rolePer.getPerId()));
                     }
                     PermissionExample example = new PermissionExample();
                     example.createCriteria().andIdIn(perIds);
-                    List<Permission> permissionList = mapper.selectByExample(example);
-                    return permissionList;
+                    permissionListByRoleId = mapper.selectByExample(example);
+                }
+                if(groupRolePermissions != null && groupRolePermissions.size() > 0){
+                    List<Integer> perIds = new ArrayList<>();
+                    for(GroupRolePermission rolePer : groupRolePermissions){
+                        perIds.add(Integer.valueOf(rolePer.getPerId()));
+                    }
+                    PermissionExample example = new PermissionExample();
+                    example.createCriteria().andIdIn(perIds);
+                    permissionListByGroupId = mapper.selectByExample(example);
+                }
+                if(permissionListByRoleId != null || permissionListByGroupId != null ){
+                    if(permissionListByGroupId != null && permissionListByRoleId != null){
+                        for(Permission permission : permissionListByGroupId){
+                            for(int i=0; i<permissionListByRoleId.size(); i++)
+                            {
+                                if(permission.getId().equals(permissionListByRoleId.get(i).getId()) ){
+                                    permissionListByRoleId.remove(permissionListByRoleId.get(i));
+                                }
+                            }
+                        }
+                        permissionListByGroupId.addAll(permissionListByRoleId);
+                        return permissionListByGroupId;
+                    }else{
+                        if(permissionListByRoleId == null){
+                            return permissionListByGroupId;
+                        }else{
+                            return permissionListByRoleId;
+                        }
+                    }
                 }
             }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Permission> queryHaveNot(String username) {
+        List<Permission> permissionsAll = queryAll();
+        List<Permission> permissionsHave = queryByUserName(username);
+        if(permissionsAll != null){
+            if(permissionsHave == null){
+                return permissionsAll;
+            }
+            for(Permission permission : permissionsHave){
+                for(int perHave=0; perHave<permissionsAll.size() ; perHave++){
+                    if(permission.getId().equals(permissionsAll.get(perHave).getId()) ){
+                        permissionsAll.remove(permissionsAll.get(perHave));
+                    }
+                }
+            }
+            return permissionsAll;
         }
         return null;
     }
@@ -94,7 +151,7 @@ public class PermissionServiceImpl implements IPermissionService {
 
     @Override
     public void delPermission(Integer id) {
-        List<RolePermission> rolePermissions = rolePermissionService.queryByPerIds(id);
+        List<GroupRolePermission> rolePermissions = groupRolePermissionService.queryByPerIds(id);
         if(rolePermissions != null && rolePermissions.size() > 0){
             throw new ErrorException(CodeMsg.PERMISSION_HAS_ROLE_USE);
         }
